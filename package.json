@@ -1,0 +1,38 @@
+{
+  "name": "g-connect-server",
+  "version": "1.0.0",
+  "description": "Galvanize Connect API",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Galvanize-Connect-Server"
+  },
+  "author": "Ivonne Terrero",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "denv": "^1.0.3",
+    "express": "^4.15.3",
+    "express-validation": "^1.0.2",
+    "humps": "^2.0.0",
+    "joi": "^10.5.2",
+    "jsonwebtoken": "^7.4.1",
+    "knex": "^0.13.0",
+    "morgan": "^1.8.2",
+    "parser": "^0.1.4",
+    "passport": "^0.3.2",
+    "pg": "^6.2.4"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.0.0",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
+  }
+}
