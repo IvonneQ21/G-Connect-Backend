@@ -17,8 +17,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cohortsRoute = require('./routes/cohorts');
-const campusesRoute = require('./routes/campuses')
-
+const campusesRoute = require('./routes/campuses');
+const usersRoute = require('./routes/users');
 app.use(bodyParser.json());
 app.use(express.static(path.join('public')));
 
@@ -39,6 +39,7 @@ app.use(express.static(path.join('public')));
 // app.use(users)
 app.use(cohortsRoute);
 app.use(campusesRoute);
+app.use(usersRoute);
 // app.use(campus)
 // app.use(projects)
 // app.use(skills)
@@ -49,7 +50,7 @@ app.use(function(req, res){
 
 
 app.get('/', function(req, res) {
-  // res.send('Hello World, Ivonne at work here');
+  res.send('Hello World, Ivonne at work here');
   res.send(path.resolve(__dirname, 'buil'))
 });
 
