@@ -1,4 +1,3 @@
-
 exports.seed = function(knex, Promise) {
   return knex('cohorts').del()
     .then(function () {

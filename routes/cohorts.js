@@ -5,7 +5,7 @@ const knex = require('../knex');
 const router = express.Router();
 const humps = require('humps');
 
-router.get('/cohorts', (req, res, next) => {
+router.get('/cohorts',  (req, res) => {
   knex('cohorts')
   .orderBy('name', 'desc')
   .then((cohort) => {
@@ -13,10 +13,10 @@ router.get('/cohorts', (req, res, next) => {
     res.send(humps.camelizeKeys(cohort));
   })
   .catch((err) => {
-    next(err);
+    res.send(err);
   });
 });
-router.get('/cohorts/:id', (req, res, next) => {
+router.get('/cohorts/:id', (req, res) => {
   let paramId = req.params.id;
   knex('cohorts')
   .where('id', paramId)
@@ -29,7 +29,7 @@ router.get('/cohorts/:id', (req, res, next) => {
     }
   })
   .catch(err => {
-    console.err(err);
+    res.send(err);
   })
 })
 
@@ -76,7 +76,7 @@ router.post('/cohorts', (req, res, next) => {
 
 //NOTE: Only a super user can delete a cohort
 //this needs to be given an authorizations part/
-router.delete('/cohorts/:id', (req, res, next) => {
+router.delete('/cohorts/:id', (req, res) => {
 
   let cohort;
   knex('cohorts')
@@ -96,7 +96,7 @@ router.delete('/cohorts/:id', (req, res, next) => {
     res.send(humps.camelizeKeys(cohort)[0]);
   })
   .catch( err => {
-     next(err);
+     res.send(err);
   });
 });
 

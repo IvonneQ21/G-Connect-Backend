@@ -1,10 +1,11 @@
-'use strict';
-const express = require('express');
-const knex = require('../knex');
-const router = express.Router();
-const humps = require('humps');
+const knex    = require('../../config/knex');
+const humps   = require('humps');
+const {camelizeKeys, decamelizeKeys} = require('humps');
 
-router.get('/campuses', (req, res) => {
+
+
+
+exports.get = function(req,res,next) {
   knex('campuses')
   .orderBy('campus_name', 'asc')
   .then(campus => {
@@ -15,9 +16,9 @@ router.get('/campuses', (req, res) => {
   .catch(err => {
     res.send(err);
   });
-});
+};
 
-router.get('/campuses/:id', (req, res) => {
+exports.byid = function(req,res,next) {
   let campusId = req.params.id;
   knex('campuses')
   .where('id', campusId)
@@ -32,9 +33,9 @@ router.get('/campuses/:id', (req, res) => {
   .catch( err => {
     res.send(err);
   })
-})
+};
 
-router.get('/campuses/:id/cohorts', (req, res) => {
+exports.cohorts = function(req,res,next) {
   let campusId = req.params.id;
   console.log("the passeinParams", req.params.id);
   knex('cohorts')
@@ -52,10 +53,9 @@ router.get('/campuses/:id/cohorts', (req, res) => {
   .catch(err => {
     res.send(err);
   })
-})
+};
 
-//NOTE: this will only be available to the Admin user and the instructor user
-router.post('/campuses', (req, res, next) => {
+exports.post = function(req,res,next) {
   knex('campuses')
   .then(campus => {
     console.log("the campus to add", campus);//question for Parker why is this coming back as undefined
@@ -75,9 +75,9 @@ router.post('/campuses', (req, res, next) => {
   .catch( err => {
     next(err);
   });
-});
-//NOTE: This is also a capability of a super user.
-router.delete('/campuses/:id', (req, res, next) => {
+};
+
+exports.delete = function(req,res,next) {
   let campus;
   knex('campuses')
   .where('id', req.params.id)
@@ -97,7 +97,4 @@ router.delete('/campuses/:id', (req, res, next) => {
   .catch( err => {
     res.send(err);
   })
-})
-
-
-module.exports = router;
+};

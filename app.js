@@ -1,24 +1,28 @@
 
 'use strict';
-
 if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config();
 }
 
 //use npm install cors - this stands for Cross- origin resouce sharing
 const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 4210;
+const app = express(), bunyanLogger = require('express-bunyan-logger');
+const PORT = process.env.PORT;
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const Bunyan = require('bunyan');
+const compress = require('compression');
+
 const cohortsRoute = require('./routes/cohorts');
 const campusesRoute = require('./routes/campuses');
 const usersRoute = require('./routes/users');
-const cookieParser = require('cookie-parser');
-const morgan= require('morgan');
+const skills = require('./routes/skills');
+
+const morgan = require('morgan');
 
 switch (app.get('env')) {
   case 'development':
@@ -54,7 +58,7 @@ app.use(cohortsRoute);
 app.use(usersRoute);
 // app.use(campus)
 // app.use(projects)
-// app.use(skills)
+app.use(skills)
 
 app.use((req, res) => {
   res.sendStatus(404);
@@ -71,4 +75,5 @@ app.listen(PORT, () => {
     console.log(`Galvanize Connect server listening on port ${PORT}`);
   }
 });
+
 module.exports = app;

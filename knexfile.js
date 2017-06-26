@@ -3,7 +3,7 @@
 module.exports = {
   development: {
     client: "pg",
-    connection: "postgress://localhost/galvanize-connect_dev",
+    connection: "postgress://localhost/G-connect_dev",
     migrations: {
       tableName: "knex_migrations"
     }
@@ -11,7 +11,7 @@ module.exports = {
 
   test: {
     client: "pg",
-    connection: "postgress://localhost/galvanize-connect_test",
+    connection: "postgress://localhost/G-connect_test",
     migrations: {
       tableName: "knex_migrations"
     }

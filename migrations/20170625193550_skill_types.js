@@ -1,12 +1,11 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('skills', (table) => {
+  return knex.schema.createTable('skill_types', (table) => {
     table.increments('id').primary();
-    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE');
     table.string('skill_name').notNullable();
     table.timestamps(true, true);
-  })
+  });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('skills');
+  return knex.schema.dropTable('skill_types');
 };

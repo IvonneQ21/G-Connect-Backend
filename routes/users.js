@@ -18,7 +18,7 @@ const { createHttpError } = require('../utils');
 router.get('/users', (req, res, next) => {
   knex('users')
   .orderBy('user_name', 'desc')
-  .then((user) =>{
+  .then((user) => {
     res.setHeader('Content-Type', 'application/json')
     res.send(humps.camelizeKeys(user));
   })
@@ -27,7 +27,7 @@ router.get('/users', (req, res, next) => {
   });
 });
 
-router.get('/users/:id', (req, res,next) => {
+router.get('/users/:id', (req, res) => {
   let userId = req.params.id;
   console.log('user', userId);
   knex('users')
@@ -44,9 +44,26 @@ router.get('/users/:id', (req, res,next) => {
     console.err(err);
   })
 })
+router.get('users/:id/skills', (req, res) => {
+ let userId = req.params.id;
+ knex('skills')
+ .where('user_id', userId)
+ .then(userSkills => {
+   console.log("the userSKILLS", userSkills);
+   if(!userSkills){
+     res.status(404).json('SKILLS NOT FOUND')
+   }else {
+     res.set('Content-Type', 'application/json')
+     res.send(humps.camelizeKeys(userSkills));
+   }
+ })
+ .catch(err => {
+   res.send(err);
+ })
+})
 
 // //creating new users:
-router.post('/users', (req, res, next) => {
+router.post('/users', (req, res) => {
   const { email, password } = req.body;
   if(!email || !email.trim()){
   res.status(400).json('Email must not be Blank');
@@ -76,7 +93,7 @@ router.post('/users', (req, res, next) => {
       linkedIn_url:req.body.linkedIn_url,
       gitHub_url:req.body.gitHub_url,
       twitter_url:req.body.twitter_url,
-      user_type_id: req.body.user_type_id
+      user_type_id: req.body.user_types_id
     }, '*')
   })
   .then(user => {
